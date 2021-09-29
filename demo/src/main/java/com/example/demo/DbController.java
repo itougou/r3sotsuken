@@ -21,7 +21,7 @@ public class DbController {
    public String index() {
        List<Map<String,Object>> list;
        list = jdbcTemplate.queryForList("select * from employee");
-       return list.toString();
+       return list.toString();//戻り値返却
    }
 
    @RequestMapping(path="/users/{id}", method=RequestMethod.GET)
