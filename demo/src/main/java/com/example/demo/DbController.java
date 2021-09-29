@@ -18,7 +18,7 @@ public class DbController {
    JdbcTemplate jdbcTemplate;
 
    @RequestMapping(path="/users", method=RequestMethod.GET)
-   public String index() {
+   public String index() {	//インデックス
        List<Map<String,Object>> list;
        list = jdbcTemplate.queryForList("select * from employee");
        return list.toString();//戻り値返却
