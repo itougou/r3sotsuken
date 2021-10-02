@@ -16,8 +16,8 @@ public class DbController {
 
    @Autowired
    JdbcTemplate jdbcTemplate;
-   
- //　★マスター★ブランチ　２０２１．１０．２　１８：４６
+
+ //　★マスター★ブランチ　２０２１．１０．２　23：53
    @RequestMapping(path="/users", method=RequestMethod.GET)
    public String index() {	//インデックス　メソッド　★マスター★ブランチ
        List<Map<String,Object>> list;
