@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.repository.PurchaseMapper">
+
+	<resultMap type="com.example.demo.entity.Purchase" id="purchase">
+		<id column="purchase_date" property="purchaseDate"></id>
+		<result column="customer_id" property="customerId"></result>
+		<result column="suu" property="suu"></result>
+		<association property="customer" resultMap="customer"></association>
+	</resultMap>
+	
+	<resultMap type="com.example.demo.entity.Customer" id="customer">
+		<id column="id" property="id"></id>
+		<result column="name" property="name"></result>
+		<result column="pass" property="pass"></result>
+		<result column="kubun" property="kubun"></result>
+		<result column="address" property="address"></result>
+		<result column="phone" property="phone"></result>
+		<result column="uppdate_date" property="updateDate"></result>
+		<result column="create_date" property="createDate"></result>
+		<result column="deletedate" property="deleteDate"></result>
+	</resultMap>
+    <select id="findMany" resultType="com.example.demo.entity.Purchase" resultMap="purchase">
+<!--     <select id="findMany" resultType="com.example.demo.entity.Purchase" > -->
+        SELECT * FROM Purchase left join customer on purchase.customer_id = customer.id
+    </select>
+        
+    <select id="findByDateId" resultType="com.example.demo.entity.Purchase" resultMap="purchase">
+        SELECT * FROM Purchase left join customer on purchase.customer_id = customer.id
+         where purchase.customer_id = #{customerId} and purchase.purchase_date = #{purchaseDate}
+    </select>
+
+    <insert id="add">
+        INSERT INTO Purchase ( purchase_date, customer_id, suu ) values ( #{purchaseDate}, #{customerId}, #{suu} ) 
+    </insert>
+    
+</mapper>

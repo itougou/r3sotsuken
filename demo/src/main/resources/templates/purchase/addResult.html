@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>注文完了</title>
+
+<link href="/css/list.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>注文完了</h1>
+<p><b>以下の注文を完了しました。</b></p>
+<p>顧客ID：  <span th:text="${purchaseData.customerId}" ></span></p>
+<p>顧客名：  <span th:text="${purchaseData.customer.name}" ></span></p>
+<p>日付：  <span th:text="${#dates.format(purchaseData.purchaseDate,'YYYY/MM/dd')}" ></span></p>
+<p>注文個数：  <span th:text="${purchaseData.suu}" ></span></p>
+</body>
+</html>

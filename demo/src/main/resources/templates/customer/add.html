@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>顧客情報追加</title>
+<link href="/css/list.css" rel="stylesheet"></link>
+<meta charset="utf-8" />
+</head>
+<body>
+    <h1>顧客情報追加</h1>
+    <form th:action="@{/customer/add}" th:object="${customerAddRequest}"
+        th:method="post">
+        <div>
+            名前：<input type="text" name="name" size="50" />
+        </div>
+        <br />
+        <div>
+            <input type="submit" value="追加" style="width: 100px;" />
+        </div>
+    </form>
+</body>
+</html>
