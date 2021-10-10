@@ -37,11 +37,12 @@ public class CustomerController {
   }
   @GetMapping(value = "/customer/list")
   public String displaySearchAll(Model model) {
-	  System.out.println("customerService="+customerService);
-	List<Customer> customer = customerService.getCustomer();
-	model.addAttribute("customerlist", customer);
+	//System.out.println("customerService="+customerService);
+	List<Customer> customer = customerService.getCustomer();	//プルダウン表示用に顧客情報を読み出す
+	model.addAttribute("customerlist", customer);	//list.htmlへ顧客情報を渡す
     return "customer/list";
   }
+  
   @GetMapping(value = "/customer/add")
   public String displayAdd(Model model) {
     return "customer/add";

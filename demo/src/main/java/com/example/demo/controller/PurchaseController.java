@@ -56,13 +56,14 @@ public class PurchaseController {
    */
   @RequestMapping(value = "/purchase/add", method = RequestMethod.POST)
   public String add(@ModelAttribute PurchaseAddRequest purchaseAddRequest, Model model) {
-	Purchase purchase = modelMapper.map( purchaseAddRequest, Purchase.class );
+	Purchase purchase = modelMapper.map( purchaseAddRequest, Purchase.class );	//リクエスト受け渡しデータからPURCHASEエンティティへデータ変換
     purchaseService.add( purchase ) ;
     
     //System.out.println("★★★★Customer-ID＝"+purchaseAddRequest.getCustomerId());
     Purchase p = purchaseService.getPurchaseOne( purchaseAddRequest.getPurchaseDate(), purchaseAddRequest.getCustomerId() ) ;
+    											//登録完了したデータ（顧客名も含んだデータ）を読み出す
     //System.out.println("★★★★Purchase＝"+p);
-	model.addAttribute( "purchaseData", p );
+	model.addAttribute( "purchaseData", p );	//登録完了したデータを表示用にaddResult.htmlへ渡す
     return "purchase/addResult";	//フォワード
   }
 }

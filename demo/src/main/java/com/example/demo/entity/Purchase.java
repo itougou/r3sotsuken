@@ -5,7 +5,7 @@ import java.util.Date;
 
 import lombok.Data;
 /**
- * 注文データ Entity　（PURCHASEテーブルの1件分のデータの入れ物）
+ * 注文データ Entity　（PURCHASEテーブルの1件分のデータの入れ物）  
  */
 @Data
 public class Purchase {
