@@ -16,7 +16,7 @@ import com.example.demo.entity.Purchase;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.PurchaseService;
 /**
- * ユーザー情報 Controller
+ * ユーザー情報 Controller 
  */
 @Controller
 public class PurchaseController {
