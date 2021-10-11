@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>注文一覧</title>
+
+<link href="/css/list.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>注文一覧</h1>
+  <table>
+  	<tr><th>注文日</th><th>ID</th><th>名前</th><th>注文数</th></tr>
+    <tr th:each="pur : ${purchaselist}" th:object="${pur}" >
+      <td th:text="*{#dates.format(purchaseDate,'YYYY/MM/dd')}"></td>
+      <td th:text="*{customerId}"></td>
+      <td th:if="*{customer != null}" th:text="*{customer.name}"></td>
+      <td th:text="*{suu}"></td>
+    </tr>
+  </table>
+</body>
+</html>

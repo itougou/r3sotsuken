@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>注文</title>
+<link href="/css/list.css" rel="stylesheet"></link>
+<meta charset="utf-8" />
+</head>
+<body>
+    <h1>注文</h1>
+    <form th:action="@{/purchase/add}" th:object="${purchaseAddRequest}"
+        th:method="post">
+        <div>
+            日　付：<input type="text" name="purchaseDate" size="50" placeholder="YYYY/MM/DD"><br>
+            ユーザ：<select name="customerId">
+			<option value=""></option><option th:each="cus : ${customerlist}" th:value="${cus.id}" th:selected="${cus.id == id}" th:inline="text">[[${cus.name}]]</option>
+            </select><br>
+            注文数：<input type="text" name="suu" size="50" ><br>
+        </div>
+        <br />
+        <div>
+            <input type="submit" value="注文" style="width: 100px;" />
+        </div>
+    </form>
+</body>
+</html>

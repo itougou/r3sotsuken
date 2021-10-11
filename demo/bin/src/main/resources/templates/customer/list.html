@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>顧客一覧</title>
+
+<link href="/css/list.css" rel="stylesheet"></link>
+</head>
+<body>
+<h1>顧客一覧</h1>
+  <table>
+  	<tr><th>ID</th><th>名前</th></tr>
+    <tr th:each="cus : ${customerlist}" th:object="${cus}" >
+      <td th:text="*{id}"></td>
+      <td th:text="*{name}"></td>
+    </tr>
+  </table>
+</body>
+</html>
