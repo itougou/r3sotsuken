@@ -39,8 +39,8 @@ public class CustomerController {
   @GetMapping(value = "/customer/list")
   public String displaySearchAll(Model model) {
 	//System.out.println("customerService="+customerService);
-	List<Customer> customer = customerService.getCustomer();	//プルダウン表示用に顧客情報を読み出す
-	model.addAttribute("customerlist", customer);	//list.htmlへ顧客情報を渡す
+	List<Customer> customer = customerService.getCustomer();	//一覧表示用に顧客情報を読み出す
+	model.addAttribute("customerlist", customer);	//list.htmlへ渡す顧客情報をセット
     return "customer/list";
   }
   

@@ -45,8 +45,8 @@ public class PurchaseController {
   }
   @GetMapping(value = "/purchase/add")
   public String displayAdd(Model model) {
-	List<Customer> customer = customerService.getCustomer();
-	model.addAttribute("customerlist", customer);
+	List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
+	model.addAttribute("customerlist", customer);	//add.htmlへ渡す顧客情報をセット
     return "purchase/add";
   }
 
