@@ -35,6 +35,7 @@ public class CustomerController {
   public String displaySearch(Model model) {
     return "customer/search";
   }
+  
   @GetMapping(value = "/customer/list")
   public String displaySearchAll(Model model) {
 	//System.out.println("customerService="+customerService);
