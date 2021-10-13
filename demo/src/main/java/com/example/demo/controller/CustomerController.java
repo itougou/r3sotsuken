@@ -48,7 +48,7 @@ public class CustomerController {
   public String displayAdd(Model model) {
     return "customer/add";
   }
-
+  
   /*
    * Post へのマッピング
    */
