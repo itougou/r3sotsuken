@@ -19,14 +19,14 @@ import com.example.demo.service.CustomerService;
  */
 @Controller
 public class CustomerController {
-  /**
-   * ユーザー情報 Service
-   */
-	  @Autowired
-	  CustomerService customerService;
+
+  //　顧客情報 Service
+  @Autowired
+  CustomerService customerService;
 	  
-	  @Autowired
-	  ModelMapper modelMapper;
+  //モデルマッパー
+  @Autowired
+  ModelMapper modelMapper;
   
   /*
    * Get へのマッピング

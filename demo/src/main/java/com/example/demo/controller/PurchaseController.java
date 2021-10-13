@@ -24,11 +24,13 @@ public class PurchaseController {
    * Service
    */
   @Autowired
-  CustomerService customerService;
+  CustomerService customerService;	//顧客情報サービス
+  
   @Autowired
-  PurchaseService purchaseService;
+  PurchaseService purchaseService;	//注文情報サービス
+  
   @Autowired
-  ModelMapper modelMapper;
+  ModelMapper modelMapper;	//モデルマッパー
   
   /*
    * Get へのマッピング
@@ -37,12 +39,14 @@ public class PurchaseController {
   public String top(Model model) {
     return "purchase/index";
   }
+  
   @GetMapping(value = "/purchase/list")
   public String displaySearchAll(Model model) {
 	List<Purchase> purchase = purchaseService.getPurchase();
 	model.addAttribute("purchaselist", purchase);
     return "purchase/list";
   }
+  
   @GetMapping(value = "/purchase/add")
   public String displayAdd(Model model) {
 	List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
