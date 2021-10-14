@@ -24,11 +24,13 @@ public class JavaConfig {
 	
 	//フィルタのパスの指定
     @Bean
-    public FilterRegistrationBean myWebMvcFilter() {
+    public FilterRegistrationBean myFilter() {
         // ServletContextInitializerBeansに格納される
-        FilterRegistrationBean bean = new FilterRegistrationBean(new MyFilter());
+        FilterRegistrationBean bean = new FilterRegistrationBean( new MyFilter() );
         // <url-pattern/>
-        bean.addUrlPatterns("/customer/list");
+        //bean.addUrlPatterns("/customer/list");
+        bean.addUrlPatterns("/customer/*");
+        bean.addUrlPatterns("/purchase/*");
         // MyFilterがMyFilter2より先に呼ばれる
         //bean.setOrder(1);
         return bean;

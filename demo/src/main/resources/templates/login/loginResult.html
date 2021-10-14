@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>ログイン</title>
+<link href="/css/list.css" rel="stylesheet"></link>
+<meta charset="utf-8" />
+</head>
+<body>
+    <h1>下記のユーザIDがログインしました</h1>
+    
+    ID　　：<span th:text="*{loginInfo.id}"></span><br>
+    PASS:<span th:text="*{loginInfo.pass}"></span>
+
+</body>
+</html>
