@@ -60,7 +60,7 @@ public class PurchaseController {
    */
   @RequestMapping(value = "/purchase/add", method = RequestMethod.POST)
   public String add(@ModelAttribute PurchaseAddRequest purchaseAddRequest, Model model) {
-	Purchase purchase = modelMapper.map( purchaseAddRequest, Purchase.class );	//リクエスト受け渡しデータからPURCHASEエンティティへデータ変換
+	Purchase purchase = modelMapper.map( purchaseAddRequest, Purchase.class );	//フォームクラスからPURCHASEエンティティへデータ変換
     purchaseService.add( purchase ) ;
     
     //System.out.println("★★★★Customer-ID＝"+purchaseAddRequest.getCustomerId());

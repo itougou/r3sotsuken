@@ -55,14 +55,14 @@ public class CustomerController {
   @RequestMapping(value = "/customer/id_search", method = RequestMethod.POST)
   public String search(@ModelAttribute CustomerSearchRequest customerSearchRequest, Model model) {
 	//Customer customer = customerService.search(customerSearchRequest);
-	Customer customer = customerService.searchById( customerSearchRequest.getId() );
+	Customer customer = customerService.searchById( customerSearchRequest.getId() );	//IDで検索
     model.addAttribute("customerinfo", customer);
     return "customer/search";
   }
   @RequestMapping(value = "/customer/add", method = RequestMethod.POST)
   public String add(@ModelAttribute CustomerAddRequest customerAddRequest, Model model) {
-	Customer customer = modelMapper.map( customerAddRequest, Customer.class );
-	customerService.add(customer);
+	Customer customer = modelMapper.map( customerAddRequest, Customer.class );	//フォームクラスからエンティティへ変換
+	customerService.add(customer);	//1件追加
 	model.addAttribute("customerData", customer );
 	 return "customer/addResult"; 	//フォワード
     

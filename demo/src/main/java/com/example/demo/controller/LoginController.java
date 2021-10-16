@@ -13,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.dto.LoginRequest;
 /**
- * 動作確認用サンプル　Controller　
+ * 　ログインController　
  */
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.StaffService;
-
 
 @Controller
 public class LoginController {
 	  @Autowired
 	  HttpSession session;  
 	  
-	
 	  @Autowired
 	  CustomerService customerService;	//　顧客情報 Service
 	
@@ -55,21 +53,18 @@ public class LoginController {
 	  //スタッフログイン
 	  @RequestMapping( value = "/staffLogin", method = RequestMethod.POST )
 	  public String doLogin( @ModelAttribute LoginRequest loginRequest, Model model ) {
-		//session.setAttribute( "loginInfo", loginRequest );
-	    //model.addAttribute( "loginInfo", loginRequest );
-		boolean result = staffService.login( loginRequest, model );
-		if( result ) {
+		boolean result = staffService.login( loginRequest, model );	//staffログインロジック呼び出し
+		if( result ) {	//ログイン成功時
 		    model.addAttribute( "loginInfo", loginRequest );	//HTMLへ渡すログイン情報をセット
 		    return "login/staffLoginResult";
-		}else {
+		}else {	//ログイン失敗時
 		    return "login/staffLogin";
 		}
 	  }
 	  //スタッフログアウト
 	  @RequestMapping( value = "/staffLogout", method = RequestMethod.POST )
 	  public String doLogout( Model model ) {
-		session.invalidate();
-
+		staffService.logout();	//staffログアウトロジック呼び出し
 	    return "login/staffLogoutResult";
 	  }
 	  
@@ -78,10 +73,10 @@ public class LoginController {
 	  public String doStaffLogin( @ModelAttribute LoginRequest loginRequest, HttpServletResponse response , Model model ) {
 
 		boolean result = customerService.login( loginRequest, response );	//顧客ログイン（セッション登録処理）ロジック
-		if( result ) {
+		if( result ) {	//ログイン成功時
 		    model.addAttribute( "loginInfo", loginRequest );	//HTMLへ渡すログイン情報をセット
 		    return "login/customerLoginResult";
-		}else {
+		}else {	//ログイン失敗時
 		    return "login/customerLogin";
 		}
 	  }
