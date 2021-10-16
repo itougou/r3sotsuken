@@ -35,4 +35,5 @@ public class PurchaseServiceImpl implements PurchaseService{
     public Purchase getPurchaseOne( Date purchaseDate, int userId ){
     	return purchaseMapper.findByDateId( purchaseDate, userId );
     }
+
 }

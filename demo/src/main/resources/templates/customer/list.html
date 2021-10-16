@@ -9,10 +9,12 @@
 <body>
 <h1>顧客一覧</h1>
   <table>
-  	<tr><th>ID</th><th>名前</th></tr>
+  	<tr><th>ID</th><th>名前</th><th>パスワード</th><th>セッションID</th></tr>
     <tr th:each="cus : ${customerlist}" th:object="${cus}" >
       <td th:text="*{id}"></td>
       <td th:text="*{name}"></td>
+      <td th:text="*{pass}"></td>
+      <td th:text="*{sessionId}"></td>
     </tr>
   </table>
 </body>

@@ -43,4 +43,8 @@ public class Customer {
      * 削除日時
      */
     private Date deleteDate;
+    /**
+     * セッションID
+     */
+    private String sessionId;
 }

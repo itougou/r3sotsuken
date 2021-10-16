@@ -10,5 +10,5 @@ public class CustomerSearchRequest implements Serializable {
   /**
    * ユーザーID
    */
-  private Long id;
+  private int id;
 }

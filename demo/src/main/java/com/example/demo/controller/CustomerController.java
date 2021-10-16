@@ -54,7 +54,8 @@ public class CustomerController {
    */
   @RequestMapping(value = "/customer/id_search", method = RequestMethod.POST)
   public String search(@ModelAttribute CustomerSearchRequest customerSearchRequest, Model model) {
-	Customer customer = customerService.search(customerSearchRequest);
+	//Customer customer = customerService.search(customerSearchRequest);
+	Customer customer = customerService.searchById( customerSearchRequest.getId() );
     model.addAttribute("customerinfo", customer);
     return "customer/search";
   }
@@ -62,7 +63,6 @@ public class CustomerController {
   public String add(@ModelAttribute CustomerAddRequest customerAddRequest, Model model) {
 	Customer customer = modelMapper.map( customerAddRequest, Customer.class );
 	customerService.add(customer);
-    
 	model.addAttribute("customerData", customer );
 	 return "customer/addResult"; 	//フォワード
     

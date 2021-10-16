@@ -31,7 +31,7 @@
         SELECT * FROM Purchase left join customer on purchase.customer_id = customer.id
          where purchase.customer_id = #{customerId} and purchase.purchase_date = #{purchaseDate}
     </select>
-
+    
     <insert id="add">
         INSERT INTO Purchase ( purchase_date, customer_id, suu ) values ( #{purchaseDate}, #{customerId}, #{suu} ) 
     </insert>

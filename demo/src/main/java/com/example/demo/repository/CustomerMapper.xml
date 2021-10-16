@@ -6,10 +6,22 @@
     <select id="findMany" resultType="com.example.demo.entity.Customer">
         SELECT * FROM Customer
     </select>
-    <select id="search" resultType="com.example.demo.entity.Customer">
+    <select id="searchById" resultType="com.example.demo.entity.Customer">
         SELECT * FROM Customer WHERE id = #{id}
+    </select>
+    <select id="searchByIdPass" resultType="com.example.demo.entity.Customer">
+        SELECT * FROM Customer WHERE id = #{id} AND pass = #{pass}
+    </select>
+    <select id="findBySession" resultType="com.example.demo.entity.Customer">
+        SELECT * FROM Customer WHERE session_id = #{sessionId}
     </select>
     <insert id="add">
         INSERT INTO Customer ( name ) values ( #{name} ) 
     </insert>
+    <update id="setSession">
+        UPDATE Customer SET session_id = #{sessionId} WHERE id = #{id}
+    </update>
+    <update id="removeSession">
+        UPDATE Customer SET session_id = "" WHERE session_id = #{sessionId}
+    </update>
 </mapper>
