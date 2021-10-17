@@ -33,7 +33,6 @@ public class JavaConfig {
         // ServletContextInitializerBeansに格納される
         //FilterRegistrationBean bean = new FilterRegistrationBean( new MyFilter() );
         FilterRegistrationBean bean = new FilterRegistrationBean( myFilter );
-        //FilterRegistrationBean bean = new FilterRegistrationBean( myFilter2 );
         // <url-pattern/>
         //bean.addUrlPatterns("/customer/list");
         bean.addUrlPatterns("/customer/list");	//顧客一覧

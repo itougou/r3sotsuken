@@ -3,7 +3,7 @@ import org.springframework.ui.Model;
 
 import com.example.demo.dto.LoginRequest;
 /**
- * 顧客情報 サービス　クラス　用インターフェース
+ * staff サービス　クラス　用インターフェース
  */
 public interface StaffService {
 

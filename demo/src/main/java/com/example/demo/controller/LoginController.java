@@ -17,7 +17,9 @@ import com.example.demo.dto.LoginRequest;
  */
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.StaffService;
-
+/**
+ * ログイン Controller　
+ */
 @Controller
 public class LoginController {
 	  @Autowired

@@ -10,12 +10,12 @@ import com.example.demo.entity.Staff;
 import com.example.demo.repository.StaffMapper;
 
 /**
- * 顧客情報 Service　（処理ロジック）　クラス　
+ * スタッフ Service　（処理ロジック）　クラス　
  */
 @Service
 public class StaffServiceImpl implements StaffService{
     /**
-     * 顧客情報 サービス　クラス
+     * staff情報 マッパー　クラス
      */
     @Autowired
     private StaffMapper staffMapper;

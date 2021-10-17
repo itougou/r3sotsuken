@@ -19,7 +19,7 @@ import com.example.demo.repository.CustomerMapper;
 @Service
 public class CustomerServiceImpl implements CustomerService{
     /**
-     * 顧客情報 サービス　クラス
+     * 顧客情報 マッパー　クラス
      */
     @Autowired
     private CustomerMapper customerMapper;

@@ -13,7 +13,7 @@ import com.example.demo.repository.PurchaseMapper;
 @Service
 public class PurchaseServiceImpl implements PurchaseService{
     /**
-     * 注文情報 サービス　クラス
+     * 注文情報 マッパー　クラス
      */
     @Autowired
     private PurchaseMapper purchaseMapper;
