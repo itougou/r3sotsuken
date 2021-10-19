@@ -9,8 +9,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.entity.Customer;
+import com.example.demo.mail.MailTool;
 import com.example.demo.repository.CustomerMapper;
 
 /**
@@ -23,7 +25,11 @@ public class CustomerServiceImpl implements CustomerService{
      */
     @Autowired
     private CustomerMapper customerMapper;
-
+    /**
+     * メール　クラス
+     */
+    @Autowired
+    private MailTool mailTool;
     //検索
     @Override
     //public Customer search( CustomerSearchRequest customerSearchRequest) {
@@ -54,21 +60,36 @@ public class CustomerServiceImpl implements CustomerService{
     	Customer c = customerMapper.searchByIdPass( Integer.parseInt( loginRequest.getId() ), loginRequest.getPass() );
     						//customerテーブルから ID、Pass が一致するレコード取得
     	if( c != null ) {	//IDとパスワード一致するレコードありの場合
-    		System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
-    		//セッションIDをランダムに生成
-    		//String rs = RandomStringUtils.randomAlphanumeric(32).toUpperCase();
-    		String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
-    		System.out.println( "login searchByIdPass=> random String:"+rs );
-        	String sessionId = "ATTENDANCE"+rs;	//セッションID文字列生成
-    	    Cookie cookie = new Cookie( "customerSessionId", sessionId );	//cookieにセッションIDを登録
-    	    cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
-    	    response.addCookie( cookie );	//cookie追加
-        	customerMapper.setSession( Integer.parseInt( loginRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
+    		
+    		String authCode = RandomStringUtils.randomNumeric(6);	//6桁のランダムな数字文字列生成
+    		System.out.println( "login authCode:"+authCode );
+    		//メール送信
+    		mailTool.send("出席管理システム 認証コード："+authCode,"出席管理システム 認証コードは、\n"+authCode+"\nです。");
+        	customerMapper.setAuthCode( Integer.parseInt( loginRequest.getId() ), authCode );//CUSTOMERテーブルにセッションID登録
+
+
         	return true;	//ログイン成功
     	}else {
     		return false;	//ログイン失敗
     	}
 
+    }
+    //認証コードチェック
+    @Override
+    public boolean authCheck( AuthRequest authRequest , HttpServletResponse response ){
+
+    	//とりあえず認証コードはノーチェックでcookieへセッションID登録
+		//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
+		//セッションIDをランダムに生成
+		String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
+		System.out.println( "authChec searchByIdPass=> random String:"+rs );
+    	String sessionId = "ATTENDANCE"+rs;	//セッションID文字列生成
+	    Cookie cookie = new Cookie( "customerSessionId", sessionId );	//cookieにセッションIDを登録
+	    cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
+	    response.addCookie( cookie );	//cookie追加
+    	customerMapper.setSession( Integer.parseInt( authRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
+
+    	return true;
     }
     //ログアウト（ cookieとcustomerテーブルからセッションID削除 ）
     @Override

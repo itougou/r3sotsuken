@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.LoginRequest;
 /**
  * 　ログインController　
@@ -72,11 +73,25 @@ public class LoginController {
 	  
 	  //顧客ログイン
 	  @RequestMapping( value = "/customerLogin", method = RequestMethod.POST )
-	  public String doStaffLogin( @ModelAttribute LoginRequest loginRequest, HttpServletResponse response , Model model ) {
+	  public String doCustomerLogin( @ModelAttribute LoginRequest loginRequest, HttpServletResponse response , Model model ) {
 
 		boolean result = customerService.login( loginRequest, response );	//顧客ログイン（セッション登録処理）ロジック
 		if( result ) {	//ログイン成功時
+			System.out.println("★★★★★ loginRequest "+loginRequest );
 		    model.addAttribute( "loginInfo", loginRequest );	//HTMLへ渡すログイン情報をセット
+//		    return "login/customerLoginResult";
+		    return "login/customerAuthInput";
+		}else {	//ログイン失敗時
+		    return "login/customerLogin";
+		}
+	  }
+	  //顧客認証コードチェック
+	  @RequestMapping( value = "/customerAuthCheck", method = RequestMethod.POST )
+	  public String doAuthCodeCheck( @ModelAttribute AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response , Model model ) {
+
+		boolean result = customerService.authCheck( authRequest,  response );	//顧客ログイン（セッション登録処理）ロジック
+		if( result ) {	//認証コードチェック成功時
+		    model.addAttribute( "authInfo", authRequest );	//HTMLへ渡すログイン情報をセット
 		    return "login/customerLoginResult";
 		}else {	//ログイン失敗時
 		    return "login/customerLogin";

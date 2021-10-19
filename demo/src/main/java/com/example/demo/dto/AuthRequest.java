@@ -3,10 +3,10 @@ import java.io.Serializable;
 
 import lombok.Data;
 /**
- * ログインフォームからの　リクエストパラメータの入れ物
+ * 認証コードフォームからの　リクエストパラメータの入れ物
  */
 @Data
-public class LoginRequest implements Serializable {
+public class AuthRequest implements Serializable {
 	  private String id;
 	  private String pass;
 	  private String authCode;

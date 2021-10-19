@@ -18,4 +18,5 @@ public interface CustomerMapper {
     List<Customer> findMany();
     boolean setSession( int id, String sessionId );
     boolean removeSession( String sessionId );
+    boolean setAuthCode( int id, String authCode );
 }

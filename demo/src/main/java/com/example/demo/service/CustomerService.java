@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.entity.Customer;
 /**
@@ -18,4 +19,5 @@ public interface CustomerService {
     List<Customer> getCustomer();
     boolean login( LoginRequest loginRequest , HttpServletResponse response );
     boolean logout( HttpServletRequest request, HttpServletResponse response );
+    boolean authCheck( AuthRequest authRequest, HttpServletResponse response );
 }

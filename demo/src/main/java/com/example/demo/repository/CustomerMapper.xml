@@ -21,6 +21,9 @@
     <update id="setSession">
         UPDATE Customer SET session_id = #{sessionId} WHERE id = #{id}
     </update>
+    <update id="setAuthCode">
+        UPDATE Customer SET auth_code = #{authCode} WHERE id = #{id}
+    </update>
     <update id="removeSession">
         UPDATE Customer SET session_id = "" WHERE session_id = #{sessionId}
     </update>

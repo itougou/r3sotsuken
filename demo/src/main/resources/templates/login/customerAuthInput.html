@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>顧客認証コード入力</title>
+<link href="/css/list.css" rel="stylesheet"></link>
+<meta charset="utf-8" />
+</head>
+<body>
+    <h1>顧客認証コード入力</h1>
+    <form th:action="@{/customerAuthCheck}" th:object="${AuthRequest}" th:method="post">
+        <div>
+           認証コード：<input type="text" name="authCode" size="40" />
+        </div>
+        <br />
+        <input type="hidden" name="id" th:value="${loginInfo.id}">
+        <div>
+            <input type="submit" value="送信" style="width: 100px;" />
+        </div>
+        <br />
+    </form>
+</body>
+</html>
