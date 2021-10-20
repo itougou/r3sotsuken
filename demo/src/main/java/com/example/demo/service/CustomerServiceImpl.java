@@ -65,8 +65,7 @@ public class CustomerServiceImpl implements CustomerService{
     		System.out.println( "login authCode:"+authCode );
     		//メール送信
     		mailTool.send("出席管理システム 認証コード："+authCode,"出席管理システム 認証コードは、\n"+authCode+"\nです。");
-        	customerMapper.setAuthCode( Integer.parseInt( loginRequest.getId() ), authCode );//CUSTOMERテーブルにセッションID登録
-
+        	customerMapper.setAuthCode( Integer.parseInt( loginRequest.getId() ), authCode );//CUSTOMERテーブルに認証コード登録
 
         	return true;	//ログイン成功
     	}else {
@@ -81,7 +80,7 @@ public class CustomerServiceImpl implements CustomerService{
     	Customer c = customerMapper.searchByIdAuthCode(Integer.parseInt( authRequest.getId()),authRequest.getAuthCode() );
     	System.out.println("authCheck customer="+c);
     	System.out.println("authCheck authRequest="+authRequest);
-    	if( c != null ) {//IDと認証コードありの場合
+    	if( c != null ) {//ID、認証コード一致するレコードありの場合
 			//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
 			//セッションIDをランダムに生成
 			String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
@@ -91,6 +90,7 @@ public class CustomerServiceImpl implements CustomerService{
 		    cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
 		    response.addCookie( cookie );	//cookie追加
 	    	customerMapper.setSession( Integer.parseInt( authRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
+	       	customerMapper.setAuthCode( Integer.parseInt( authRequest.getId() ), "" );//CUSTOMERテーブルの認証コード消去
 	    	return true;
     	}else {
     		return false;
