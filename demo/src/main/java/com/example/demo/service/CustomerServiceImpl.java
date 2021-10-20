@@ -81,8 +81,7 @@ public class CustomerServiceImpl implements CustomerService{
     	Customer c = customerMapper.searchByIdAuthCode(Integer.parseInt( authRequest.getId()),authRequest.getAuthCode() );
     	System.out.println("authCheck customer="+c);
     	System.out.println("authCheck authRequest="+authRequest);
-    	if( c != null ) {
-    		//とりあえず認証コードはノーチェックでcookieへセッションID登録
+    	if( c != null ) {//IDと認証コードありの場合
 			//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
 			//セッションIDをランダムに生成
 			String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
