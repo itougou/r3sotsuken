@@ -13,6 +13,7 @@ public interface CustomerMapper {
     //Customer search(CustomerSearchRequest customer);
     Customer searchById( int id );
     Customer searchByIdPass( int id, String pass );
+    Customer searchByIdAuthCode( int id, String auth );
     Customer findBySession(String sessionId);
     void add(Customer customer);
     List<Customer> findMany();

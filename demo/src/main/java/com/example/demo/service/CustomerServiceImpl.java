@@ -78,18 +78,25 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean authCheck( AuthRequest authRequest , HttpServletResponse response ){
 
-    	//とりあえず認証コードはノーチェックでcookieへセッションID登録
-		//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
-		//セッションIDをランダムに生成
-		String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
-		System.out.println( "authChec searchByIdPass=> random String:"+rs );
-    	String sessionId = "ATTENDANCE"+rs;	//セッションID文字列生成
-	    Cookie cookie = new Cookie( "customerSessionId", sessionId );	//cookieにセッションIDを登録
-	    cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
-	    response.addCookie( cookie );	//cookie追加
-    	customerMapper.setSession( Integer.parseInt( authRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
-
-    	return true;
+    	Customer c = customerMapper.searchByIdAuthCode(Integer.parseInt( authRequest.getId()),authRequest.getAuthCode() );
+    	System.out.println("authCheck customer="+c);
+    	System.out.println("authCheck authRequest="+authRequest);
+    	if( c != null ) {
+    		//とりあえず認証コードはノーチェックでcookieへセッションID登録
+			//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
+			//セッションIDをランダムに生成
+			String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
+			System.out.println( "authChec searchByIdPass=> random String:"+rs );
+	    	String sessionId = "ATTENDANCE"+rs;	//セッションID文字列生成
+		    Cookie cookie = new Cookie( "customerSessionId", sessionId );	//cookieにセッションIDを登録
+		    cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
+		    response.addCookie( cookie );	//cookie追加
+	    	customerMapper.setSession( Integer.parseInt( authRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
+	    	return true;
+    	}else {
+    		return false;
+    	}
+    	
     }
     //ログアウト（ cookieとcustomerテーブルからセッションID削除 ）
     @Override
