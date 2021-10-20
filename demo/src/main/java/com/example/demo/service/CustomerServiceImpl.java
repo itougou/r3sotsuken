@@ -104,13 +104,13 @@ public class CustomerServiceImpl implements CustomerService{
 	    Cookie cookies[] = request.getCookies();
 	    for (Cookie cookie : cookies) {
 	        if ( cookie.getName().equals("customerSessionId") ) {	//クッキーの中からcustomerSessionIdを探す
+	             sessionId = cookie.getValue();	//セッションIDを取り出す
+	             customerMapper.removeSession( sessionId );	//customerテーブルのセッションIDを消去
+	             System.out.println("★ Customer logout removeSession() sessionId（cookie）＝"+sessionId);
 	             cookie.setMaxAge(0);//有効期限：0に設定　= すぐに消去される
 	             response.addCookie(cookie);
-	             sessionId = cookie.getValue();	//セッションIDを取り出す
 	        }
 	    }
-	    System.out.println("★ Customer logout removeSession() sessionId（cookie）＝"+sessionId);
-    	customerMapper.removeSession( sessionId );	//customerテーブルのセッションIDを消去
     	return true;
     }
 }
