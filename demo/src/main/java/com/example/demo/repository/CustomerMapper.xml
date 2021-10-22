@@ -28,6 +28,12 @@
         UPDATE Customer SET auth_code = #{authCode} WHERE id = #{id}
     </update>
     <update id="removeSession">
-        UPDATE Customer SET session_id = "" WHERE session_id = #{sessionId}
+        UPDATE Customer SET session_id = "" , auth_time = NULL WHERE session_id = #{sessionId}
     </update>
+    <update id="setAuthTime">
+        UPDATE Customer SET auth_time = #{authTime} WHERE id = #{id}
+    </update>
+    <select id="getAuthTime">
+        SELECT auth_time FROM Customer WHERE id = #{id}
+    </select>
 </mapper>

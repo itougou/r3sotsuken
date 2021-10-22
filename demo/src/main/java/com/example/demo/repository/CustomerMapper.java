@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,4 +21,5 @@ public interface CustomerMapper {
     boolean setSession( int id, String sessionId );
     boolean removeSession( String sessionId );
     boolean setAuthCode( int id, String authCode );
+    boolean setAuthTime( int id, Date authTime );
 }

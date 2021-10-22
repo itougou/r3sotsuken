@@ -47,4 +47,8 @@ public class Customer {
      * セッションID
      */
     private String sessionId;
+    /**
+     * 認証時刻
+     */
+    private Date authTime;
 }
