@@ -34,12 +34,10 @@ public class JavaConfig {
 		//FilterRegistrationBean bean = new FilterRegistrationBean( new MyFilter() ); 自作クラスnewすると動作しない？代わりに@Autowierdを入れる
 		FilterRegistrationBean bean = new FilterRegistrationBean( myFilter );
 		// <url-pattern/>
-		//bean.addUrlPatterns("/customer/list");
 		bean.addUrlPatterns("/customer/list");	//顧客一覧
 		bean.addUrlPatterns("/customer/add");	//顧客追加
 		bean.addUrlPatterns("/customer/search");	//顧客検索
 		bean.addUrlPatterns("/purchase/list");	//顧客一覧
-		//bean.addUrlPatterns("/purchase/*");
 		// MyFilterがMyFilter2より先に呼ばれる
 		//bean.setOrder(1);
 		return bean;
