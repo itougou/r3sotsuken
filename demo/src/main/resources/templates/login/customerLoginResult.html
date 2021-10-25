@@ -9,7 +9,8 @@
 <body>
     <h1>下記の顧客ユーザIDがログインしました</h1>
     
-    ID　　：<span th:text="${authInfo.id}"></span><br>
+    ID　　：<span th:text="${loginCustomer.id}"></span><br>
+    NAME　　：<span th:text="${loginCustomer.name}"></span><br>
 	<h3><a href="/">TOPへ</a></h3>
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService{
     
     //ログイン（ 成功時は、cookieとcustomerテーブルへセッションID登録）
     @Override
-    public boolean login( LoginRequest loginRequest , HttpServletResponse response ){
+    public boolean login( LoginRequest loginRequest , HttpServletRequest request, HttpServletResponse response ){
     	Customer c = customerMapper.searchByIdPass( Integer.parseInt( loginRequest.getId() ), loginRequest.getPass() );
     						//customerテーブルから ID、Pass が一致するレコード取得
     	if( c != null ) {	//IDとパスワード一致するレコードありの場合
@@ -71,6 +72,10 @@ public class CustomerServiceImpl implements CustomerService{
     		customerMapper.setAuthCode( Integer.parseInt( loginRequest.getId() ), authCode );//CUSTOMERテーブルに認証コード登録
     		Date authTime = new Date();
     		customerMapper.setAuthTime( Integer.parseInt( loginRequest.getId() ), authTime );//CUSTOMERテーブルに認証時刻登録
+    		
+    		HttpSession session = request.getSession(true);	//セッションスコープ生成
+    		System.out.println("★CustomerServiceImpl login() session:"+session);
+    		session.setAttribute("loginCustomer", c );   	//セッションスコープにログイン成功した顧客のエンティティ保存	
 
     		return true;	//ログイン成功
     	}else {
@@ -80,9 +85,16 @@ public class CustomerServiceImpl implements CustomerService{
     }
     //認証コードチェック
     @Override
-    public boolean authCheck( AuthRequest authRequest , HttpServletResponse response ){
+    public boolean authCheck( AuthRequest authRequest , HttpServletRequest request, HttpServletResponse response ){
 
-    	Customer c = customerMapper.searchByIdAuthCode(Integer.parseInt( authRequest.getId()),authRequest.getAuthCode() );
+   		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
+		System.out.println("★CustomerServiceImpl auｔｈCheck() session:"+session);
+   		if( session == null ) {
+   			return false;	//認証失敗
+   		}
+		Customer authCustomer = (Customer)session.getAttribute("loginCustomer" );   	//セッションスコープからログイン中の顧客エンティティ取り出し	
+		
+    	Customer c = customerMapper.searchByIdPassAuthCode( authCustomer.getId(), authCustomer.getPass(), authRequest.getAuthCode() );
     	System.out.println("authCheck customer="+c);
     	System.out.println("authCheck authRequest="+authRequest);
     	if( c != null ) {//ID、認証コード一致するレコードありの場合
@@ -131,6 +143,8 @@ public class CustomerServiceImpl implements CustomerService{
 				response.addCookie(cookie);
 			}
 		}
+		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
+		if(session != null) session.invalidate();	//セッションスコープ破棄
 		return true;
     }
 }

@@ -29,7 +29,7 @@ public class StaffServiceImpl implements StaffService{
 		Staff staff = staffMapper.findByIdPass( Integer.parseInt(loginRequest.getId()), loginRequest.getPass() );	//顧客ログイン（セッション登録処理）ロジック
 		if( staff!=null ) {
 			System.out.println("staffMapper findByIdPass result staff="+staff.getId()+" , "+staff.getPass());
-			session.setAttribute( "loginInfo", loginRequest );	//セッションスコープへログイン情報セット
+			session.setAttribute( "staffloginInfo", loginRequest );	//セッションスコープへログイン情報セット
 			return true;
 		}else {
 			return false;

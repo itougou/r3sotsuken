@@ -37,8 +37,12 @@ public class MyFilter implements Filter {
 			RequestDispatcher dispatch = request.getRequestDispatcher("/staffLogin");	//ログイン画面へフォワード
 			dispatch.forward(request, response);
 		}else {
-			LoginRequest login = (LoginRequest)session.getAttribute( "loginInfo" );	//セッションスコープ取り出し
+			LoginRequest login = (LoginRequest)session.getAttribute( "staffloginInfo" );	//セッションスコープ取り出し
 			System.out.println("★MyFilter （スタッフ用フィルタ） doFilter start SESISON login="+login);
+			if(login==null) {	//セッションスコープにスタッフのログイン情報が入っていない場合
+				RequestDispatcher dispatch = request.getRequestDispatcher("/staffLogin");	//ログイン画面へフォワード
+				dispatch.forward(request, response);
+			}
 		}
 		
 		

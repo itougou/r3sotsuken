@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.entity.Customer;
 /**
  * 　ログインController　
  */
@@ -73,9 +74,9 @@ public class LoginController {
 	  
 	  //顧客ログイン
 	  @RequestMapping( value = "/customerLogin", method = RequestMethod.POST )
-	  public String doCustomerLogin( @ModelAttribute LoginRequest loginRequest, HttpServletResponse response , Model model ) {
+	  public String doCustomerLogin( @ModelAttribute LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response , Model model ) {
 
-		boolean result = customerService.login( loginRequest, response );	//顧客ログイン（セッション登録処理）ロジック
+		boolean result = customerService.login( loginRequest, request, response );	//顧客ログイン（セッション登録処理）ロジック
 		if( result ) {	//ログイン成功時
 			System.out.println("★★★★★ loginRequest "+loginRequest );
 		    model.addAttribute( "loginInfo", loginRequest );	//HTMLへ渡すログイン情報をセット
@@ -89,9 +90,15 @@ public class LoginController {
 	  @RequestMapping( value = "/customerAuthCheck", method = RequestMethod.POST )
 	  public String doAuthCodeCheck( @ModelAttribute AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response , Model model ) {
 
-		boolean result = customerService.authCheck( authRequest,  response );	//顧客ログイン（セッション登録処理）ロジック
+		boolean result = customerService.authCheck( authRequest, request, response );	//顧客ログイン（セッション登録処理）ロジック
 		if( result ) {	//認証コードチェック成功時
-		    model.addAttribute( "authInfo", authRequest );	//HTMLへ渡すログイン情報をセット
+	   		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
+			System.out.println("★LoginController doAuthCodeCheck() session:"+session);
+	   		if( session == null ) {
+	   			return "login/customerLogin";
+	   		}
+		    //model.addAttribute( "authInfo", authRequest );	//HTMLへ渡すログイン情報をセット
+		    model.addAttribute( "loginCustomer", (Customer)session.getAttribute("loginCustomer") );	//HTMLへ渡すログイン情報をセット
 		    return "login/customerLoginResult";
 		}else {	//ログイン失敗時
 		    return "login/customerLogin";

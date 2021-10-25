@@ -10,7 +10,7 @@ public class Customer {
     /**
      * ID
      */
-    private Long id;
+    private Integer id;
     /**
      * 名前
      */

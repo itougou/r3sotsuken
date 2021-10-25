@@ -12,8 +12,8 @@
     <select id="searchByIdPass" resultType="com.example.demo.entity.Customer">
         SELECT * FROM Customer WHERE id = #{id} AND pass = #{pass}
     </select>
-    <select id="searchByIdAuthCode" resultType="com.example.demo.entity.Customer">
-        SELECT * FROM Customer WHERE id = #{id} AND auth_code = #{auth}
+    <select id="searchByIdPassAuthCode" resultType="com.example.demo.entity.Customer">
+        SELECT * FROM Customer WHERE id = #{id} AND pass = #{pass} AND auth_code = #{auth}
     </select>
     <select id="findBySession" resultType="com.example.demo.entity.Customer">
         SELECT * FROM Customer WHERE session_id = #{sessionId}
