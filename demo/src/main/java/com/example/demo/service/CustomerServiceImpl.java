@@ -95,9 +95,10 @@ public class CustomerServiceImpl implements CustomerService{
 		Customer authCustomer = (Customer)session.getAttribute("loginCustomer" );   	//セッションスコープからログイン中の顧客エンティティ取り出し	
 		
 		Customer c = customerMapper.searchByIdPassAuthCode( authCustomer.getId(), authCustomer.getPass(), authRequest.getAuthCode() );
+						//セッションスコープの「ID」、「パスワード」、入力した「認証コード」で顧客テーブル検索
 		System.out.println("authCheck customer="+c);
 		System.out.println("authCheck authRequest="+authRequest);
-		if( c != null ) {//ID、認証コード一致するレコードありの場合
+		if( c != null ) {//ID、パスワード、認証コード一致するレコードありの場合
 			//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
 			
 			Date nowTime = new Date();	//現在時刻巣h得
