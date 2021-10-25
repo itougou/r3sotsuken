@@ -90,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService{
 		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
 		System.out.println("★CustomerServiceImpl auｔｈCheck() session:"+session);
    		if( session == null ) {
-   			return false;	//認証失敗
+   			return false;	//処理エラー（セッション切れなど）
    		}
 		Customer authCustomer = (Customer)session.getAttribute("loginCustomer" );   	//セッションスコープからログイン中の顧客エンティティ取り出し	
 		
