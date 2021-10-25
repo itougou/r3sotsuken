@@ -87,28 +87,28 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean authCheck( AuthRequest authRequest , HttpServletRequest request, HttpServletResponse response ){
 
-   		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
+		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
 		System.out.println("★CustomerServiceImpl auｔｈCheck() session:"+session);
    		if( session == null ) {
    			return false;	//認証失敗
    		}
 		Customer authCustomer = (Customer)session.getAttribute("loginCustomer" );   	//セッションスコープからログイン中の顧客エンティティ取り出し	
 		
-    	Customer c = customerMapper.searchByIdPassAuthCode( authCustomer.getId(), authCustomer.getPass(), authRequest.getAuthCode() );
-    	System.out.println("authCheck customer="+c);
-    	System.out.println("authCheck authRequest="+authRequest);
-    	if( c != null ) {//ID、認証コード一致するレコードありの場合
-    		//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
-    		
-    		Date nowTime = new Date();	//現在時刻巣h得
-    		Date authTime = c.getAuthTime();	//Customerテーブルから認証コード送信時刻取り出し
-    		long diff = nowTime.getTime() - authTime.getTime() ;//認証コードmail送信後、現在までのミリ秒数算出 
-    		if ( diff > 3*60*1000 ){	//3分を超えている場合タイムアウト
-    			System.out.println("タイムアウト："+diff);
-    			customerMapper.setAuthCode( Integer.parseInt( authRequest.getId() ), "" );//CUSTOMERテーブルの認証コード消去
-    			customerMapper.setAuthTime( Integer.parseInt( authRequest.getId() ), null );//CUSTOMERテーブルの認証時刻消去
-    			return false;	//認証失敗
-    		}
+		Customer c = customerMapper.searchByIdPassAuthCode( authCustomer.getId(), authCustomer.getPass(), authRequest.getAuthCode() );
+		System.out.println("authCheck customer="+c);
+		System.out.println("authCheck authRequest="+authRequest);
+		if( c != null ) {//ID、認証コード一致するレコードありの場合
+			//System.out.println("login searchByIdPass=> ID:"+c.getId()+","+ "PASS"+c.getPass());
+			
+			Date nowTime = new Date();	//現在時刻巣h得
+			Date authTime = c.getAuthTime();	//Customerテーブルから認証コード送信時刻取り出し
+			long diff = nowTime.getTime() - authTime.getTime() ;//認証コードmail送信後、現在までのミリ秒数算出 
+			if ( diff > 3*60*1000 ){	//3分を超えている場合タイムアウト
+				System.out.println("タイムアウト："+diff);
+				customerMapper.setAuthCode( Integer.parseInt( authRequest.getId() ), "" );//CUSTOMERテーブルの認証コード消去
+				customerMapper.setAuthTime( Integer.parseInt( authRequest.getId() ), null );//CUSTOMERテーブルの認証時刻消去
+				return false;	//認証失敗
+			}
 
 			//セッションIDをランダムに生成
 			String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
@@ -121,14 +121,14 @@ public class CustomerServiceImpl implements CustomerService{
 			customerMapper.setAuthTime( Integer.parseInt( authRequest.getId() ), authTime );//CUSTOMERテーブルに認証時刻登録
 			customerMapper.setAuthCode( Integer.parseInt( authRequest.getId() ), "" );//CUSTOMERテーブルの認証コード消去
 			return true;	//認証成功
-    	}else {
-    		return false;	//認証失敗
-    	}
+		}else {
+			return false;	//認証失敗
+		}
     	
-    }
-    //ログアウト（ cookieとcustomerテーブルからセッションID削除 ）
-    @Override
-    public boolean logout( HttpServletRequest request , HttpServletResponse response ){
+   	}
+ 	//ログアウト（ cookieとcustomerテーブルからセッションID削除 ）
+  	@Override
+   	public boolean logout( HttpServletRequest request , HttpServletResponse response ){
 		String sessionId="";
 		Cookie cookies[] = request.getCookies();
 		if( cookies == null ) {	//cokkie存在しない場合
