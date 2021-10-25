@@ -52,9 +52,11 @@ public class MyFilter2 implements Filter {
 		System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerSessionId（cookie）:"+customerSessionId);
 		if ( customerSessionId.equals("")==false ) {	//cookie内にセッションIDが入っている場合
 			Customer c = customerService.findBySession( customerSessionId );			
+			System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerService.findBySession:"+c);
 			if( c==null ) {	//CUSTOMERテーブルにcooieのセッションIDと一致する顧客が無ければ
 				RequestDispatcher dispatch = request.getRequestDispatcher("/customerLogin");	//ログイン画面へフォワード
 				dispatch.forward( request, response );
+				return;
 			}
 			System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerSessionId（DB）:"+c.getSessionId());
 		}else {	//cookie内にセッションIDが入っていなかった場合
