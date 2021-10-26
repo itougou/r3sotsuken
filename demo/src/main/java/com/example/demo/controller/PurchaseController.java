@@ -52,11 +52,11 @@ public class PurchaseController {
   
   @GetMapping(value = "/purchase/add")
   public String displayAdd(Model model, HttpServletRequest request) {
-	HttpSession session = request.getSession(false);
+	HttpSession session = request.getSession(false);	//セッションスコープ取り出し
 	if( session == null) {	//セッションスコープなしの場合
 		return "login/customerLogin";	//ログイン画面へ遷移
 	}else {	//セッションスコープありの場合
-		Customer c = (Customer)session.getAttribute("loginCustomer");
+		Customer c = (Customer)session.getAttribute("loginCustomer");//ｾｯｼｮﾝｽｺｰﾌﾟからログイン済み顧客情報取り出し
 		model.addAttribute("loginCustomer", c);	//add.htmlへ渡す顧客情報をセット
 		List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
 		model.addAttribute("customerlist", customer);	//add.htmlへ渡す顧客情報をセット
