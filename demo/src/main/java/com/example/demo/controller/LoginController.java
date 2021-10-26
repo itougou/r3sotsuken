@@ -1,4 +1,6 @@
 package com.example.demo.controller;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -97,9 +99,10 @@ public class LoginController {
 	   		if( session == null ) {
 	   			return "login/customerLogin";
 	   		}
-		    //model.addAttribute( "authInfo", authRequest );	//HTMLへ渡すログイン情報をセット
 		    model.addAttribute( "loginCustomer", (Customer)session.getAttribute("loginCustomer") );	//HTMLへ渡すログイン情報をセット
-		    return "login/customerLoginResult";
+			List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
+			model.addAttribute("customerlist", customer);	//add.htmlへ渡す顧客情報をセット
+		    return "purchase/add";
 		}else {	//ログイン失敗時
 		    return "login/customerLogin";
 		}

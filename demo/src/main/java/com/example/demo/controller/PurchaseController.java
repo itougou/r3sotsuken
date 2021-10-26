@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,10 +51,17 @@ public class PurchaseController {
   }
   
   @GetMapping(value = "/purchase/add")
-  public String displayAdd(Model model) {
-	List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
-	model.addAttribute("customerlist", customer);	//add.htmlへ渡す顧客情報をセット
-    return "purchase/add";
+  public String displayAdd(Model model, HttpServletRequest request) {
+	HttpSession session = request.getSession(false);
+	if( session == null) {	//セッションスコープなしの場合
+		return "login/customerLogin";	//ログイン画面へ遷移
+	}else {	//セッションスコープありの場合
+		Customer c = (Customer)session.getAttribute("loginCustomer");
+		model.addAttribute("loginCustomer", c);	//add.htmlへ渡す顧客情報をセット
+		List<Customer> customer = customerService.getCustomer();	//顧客名プルダウン表示用に顧客情報を読み出す
+		model.addAttribute("customerlist", customer);	//add.htmlへ渡す顧客情報をセット
+		return "purchase/add";	//注文画面へ遷移
+	}
   }
 
 

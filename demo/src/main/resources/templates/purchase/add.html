@@ -8,6 +8,8 @@
 </head>
 <body>
     <h1>注文</h1>
+    <p><span th:text="${loginCustomer.name}"></span>　さんこんにちわ！！</p>
+    <p>注文内容を入力して「注文」ボタンをクリックしてください。</p><br>
     <form th:action="@{/purchase/add}" th:object="${purchaseAddRequest}"
         th:method="post">
         <div>

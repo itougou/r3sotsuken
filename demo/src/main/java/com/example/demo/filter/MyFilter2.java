@@ -9,8 +9,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,33 +37,15 @@ public class MyFilter2 implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		// リクエスト発行時に実行される
-		System.out.println("★MyFilter2 （顧客用フィルタ）  doFilter start");
-		Cookie[] cookies = ((HttpServletRequest)request).getCookies();	//cookie情報取り出し
-		String customerSessionId="";
-		if (cookies != null){
-			for (int i = 0 ; i < cookies.length ; i++){	//cookieの件数分繰り返す
-				System.out.println(cookies[i].getName()+"、");
-				if ( cookies[i].getName().equals("customerSessionId") ){	//クッキー名が「customerSessionId」の場合
-					customerSessionId = cookies[i].getValue();	//値を取り出す
-				}
-			}
-		}
-		System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerService:"+customerService);
-		System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerSessionId（cookie）:"+customerSessionId);
-		if ( customerSessionId.equals("")==false ) {	//cookie内にセッションIDが入っている場合
-			Customer c = customerService.findBySession( customerSessionId );			
-			System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerService.findBySession:"+c);
-			if( c==null ) {	//CUSTOMERテーブルにcooieのセッションIDと一致する顧客が無ければ
-				RequestDispatcher dispatch = request.getRequestDispatcher("/customerLogin");	//ログイン画面へフォワード
-				dispatch.forward( request, response );
-				return;
-			}
-			System.out.println("★MyFilter2r （顧客用フィルタ）  doFilter start customerSessionId（DB）:"+c.getSessionId());
-		}else {	//cookie内にセッションIDが入っていなかった場合
+
+		Customer c  = customerService.cookieCheck( (HttpServletRequest)request );	//クッキーチェック処理
+		if(c==null) {//cookie内にセッションIDが入っていなかった場合
 			RequestDispatcher dispatch = request.getRequestDispatcher("/customerLogin");	//ログイン画面へフォワード
 			dispatch.forward( request, response );
+			return;
 		}
-		
+		HttpSession session = ((HttpServletRequest)request).getSession(true);//セッションスコープ新規生成
+		session.setAttribute("loginCustomer", c);	//ログイン中の顧客情報をセット
 		
 		chain.doFilter(request, response);
 		

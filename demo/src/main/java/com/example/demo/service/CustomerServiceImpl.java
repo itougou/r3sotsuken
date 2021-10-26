@@ -32,6 +32,10 @@ public class CustomerServiceImpl implements CustomerService{
      */
     @Autowired
     private MailTool mailTool;
+
+    @Autowired
+    private CustomerService customerService;
+    
     //検索
     @Override
     //public Customer search( CustomerSearchRequest customerSearchRequest) {
@@ -148,4 +152,31 @@ public class CustomerServiceImpl implements CustomerService{
 		if(session != null) session.invalidate();	//セッションスコープ破棄
 		return true;
     }
+  	
+  	//cookieチェック（cookieに customerSessionId が正しくセットされているかどうかのチェック）
+  	@Override
+  	public Customer cookieCheck( HttpServletRequest request ) {
+  		Cookie[] cookies = request.getCookies();	//cookie情報取り出し
+  		String customerSessionId="";
+  		if (cookies != null){
+  			for (int i = 0 ; i < cookies.length ; i++){	//cookieの件数分繰り返す
+  				System.out.println(cookies[i].getName()+"、");
+  				if ( cookies[i].getName().equals("customerSessionId") ){	//クッキー名が「customerSessionId」の場合
+  					customerSessionId = cookies[i].getValue();	//値を取り出す
+  				}
+  			}
+  		}
+  		System.out.println("★displayAdd customerService:"+customerService);
+  		System.out.println("★displayAdd customerSessionId（cookie）:"+customerSessionId);
+  		if ( customerSessionId.equals("")==false ) {	//cookie内にcustomerSessionIdが入っている場合
+  			Customer c = customerService.findBySession( customerSessionId );			
+  			if( c==null ) {	//CUSTOMERテーブルにcooieのセッションIDと一致する顧客が無ければ
+  				return null;	//チェックNG
+  			}else {
+  				return c;//顧客情報を返す（cookieのチェックOK）
+  			}
+  		}else {	//cookie内に customerSessionId 　が入っていなかった場合
+  			return null;	//チェックNG
+  		}
+  	}
 }
