@@ -72,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService{
     		//メール送信
     		String title="出席管理システム 認証コード："+authCode;
     		String body="出席管理システム 認証コードは、\n"+authCode+"\nです。";
-    		mailTool.send( title, body );
+    		mailTool.send( title, body, c.getEmail() );	//認証コードをmailで送信
     		customerMapper.setAuthCode( Integer.parseInt( loginRequest.getId() ), authCode );//CUSTOMERテーブルに認証コード登録
     		Date authTime = new Date();
     		customerMapper.setAuthTime( Integer.parseInt( loginRequest.getId() ), authTime );//CUSTOMERテーブルに認証時刻登録

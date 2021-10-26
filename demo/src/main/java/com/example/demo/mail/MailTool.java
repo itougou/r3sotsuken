@@ -13,13 +13,13 @@ public class MailTool {
     @Autowired
     private MailSender sender;
     
-	public String send( String title, String body ) {	//メール送信
+	public String send( String title, String body , String email ) {	//メール送信
 		
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-	    mailMessage.setTo("itou@icc.core.ac.jp");	//送信先アドレス
-	    mailMessage.setReplyTo("yamadataro@icc.core.ac.jp");	//返信先アドレス
-	    mailMessage.setFrom("yamadataro@icc.core.ac.jp");	//送信元アドレス
+	    mailMessage.setTo( email );	//送信先アドレス
+	    mailMessage.setReplyTo("yamadataro@icc.core.ac.jp");	//返信先アドレス （山田太郎）
+	    mailMessage.setFrom("yamadataro@icc.core.ac.jp");	//送信元アドレス （山田太郎）
 	    mailMessage.setSubject(title);	//タイトル
 	    mailMessage.setText(body);	//本文"テストメールです、\nここから次の行\nおわりです\n"
 
