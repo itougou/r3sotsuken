@@ -29,10 +29,10 @@ public class JavaConfig {
 	
 	//フィルタの登録、フィルタパスの指定
 	@Bean
-	public FilterRegistrationBean myFilterBean() {	//スタッフ用フィルターの登録
+	public FilterRegistrationBean<MyFilter> myFilterBean() {	//スタッフ用フィルターの登録
 		// ServletContextInitializerBeansに格納される
 		//FilterRegistrationBean bean = new FilterRegistrationBean( new MyFilter() ); 自作クラスnewすると動作しない？代わりに@Autowierdを入れる
-		FilterRegistrationBean bean = new FilterRegistrationBean( myFilter );
+		FilterRegistrationBean<MyFilter> bean = new FilterRegistrationBean<MyFilter>( myFilter );
 		// <url-pattern/>
 		bean.addUrlPatterns("/customer/list");	//顧客一覧
 		bean.addUrlPatterns("/customer/add");	//顧客追加
@@ -43,12 +43,12 @@ public class JavaConfig {
 		return bean;
 	}
 	@Bean
-	public FilterRegistrationBean myFilterBean2() {	//顧客用フィルターの登録
+	public FilterRegistrationBean<MyFilter2> myFilterBean2() {	//顧客用フィルターの登録
 		// ServletContextInitializerBeansに格納される
 		//FilterRegistrationBean bean = new FilterRegistrationBean( new MyFilter2() ); 自作クラスnewすると動作しない？代わりに@Autowierdを入れる
-		FilterRegistrationBean bean = new FilterRegistrationBean( myFilter2 );
+		FilterRegistrationBean<MyFilter2> bean = new FilterRegistrationBean<MyFilter2>( myFilter2 );
 		// <url-pattern/>
-		bean.addUrlPatterns("/purchase/add");	//注文
+		bean.addUrlPatterns("/customer/purchase/add");	//注文
 		// MyFilterがMyFilter2より先に呼ばれる
 		//bean.setOrder(1);
 		return bean;

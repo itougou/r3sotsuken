@@ -33,8 +33,8 @@ public class CustomerServiceImpl implements CustomerService{
     @Autowired
     private MailTool mailTool;
 
-    @Autowired
-    private CustomerService customerService;
+//    @Autowired
+//    private CustomerService customerService;
     
     //検索
     @Override
@@ -121,6 +121,7 @@ public class CustomerServiceImpl implements CustomerService{
 			String sessionId = "ATTENDANCE"+rs;	//セッションID文字列生成
 			Cookie cookie = new Cookie( "customerSessionId", sessionId );	//cookieにセッションIDを登録
 			cookie.setMaxAge( 365*24*60*60 );	//有効期限 365日の秒数 に設定
+			cookie.setPath( "/customer" );	//このクッキー使用できるのは顧客だけにする
 			response.addCookie( cookie );	//cookie追加
 			customerMapper.setSession( Integer.parseInt( authRequest.getId() ), sessionId );//CUSTOMERテーブルにセッションID登録
 			customerMapper.setAuthTime( Integer.parseInt( authRequest.getId() ), authTime );//CUSTOMERテーブルに認証時刻登録
@@ -136,6 +137,7 @@ public class CustomerServiceImpl implements CustomerService{
    	public boolean logout( HttpServletRequest request , HttpServletResponse response ){
 		String sessionId="";
 		Cookie cookies[] = request.getCookies();
+		System.out.println("logout() cookies="+cookies);
 		if( cookies == null ) {	//cokkie存在しない場合
 			return true;	//何もせず終了
 		}
@@ -146,6 +148,7 @@ public class CustomerServiceImpl implements CustomerService{
 				System.out.println("★ Customer logout removeSession() sessionId（cookie）＝"+sessionId);
 				cookie.setMaxAge(0);//有効期限：0に設定　= すぐに消去される
 				response.addCookie(cookie);
+				System.out.println("logout() cookies消去！");
 			}
 		}
 		HttpSession session = request.getSession(false);	//セッションスコープ取り出し
@@ -153,26 +156,42 @@ public class CustomerServiceImpl implements CustomerService{
 		return true;
     }
   	
-  	//cookieチェック（cookieに customerSessionId が正しくセットされているかどうかのチェック）
+  	//cookieチェック（cookieに customerSessionId が正しくセットされているかどうかのチェック）　チェックOKなら　新なセッションIDに書き換える
   	@Override
-  	public Customer cookieCheck( HttpServletRequest request ) {
+  	public Customer cookieCheck( HttpServletRequest request , HttpServletResponse response ) {
   		Cookie[] cookies = request.getCookies();	//cookie情報取り出し
+  		Cookie cookie=null;
   		String customerSessionId="";
   		if (cookies != null){
   			for (int i = 0 ; i < cookies.length ; i++){	//cookieの件数分繰り返す
   				System.out.println(cookies[i].getName()+"、");
   				if ( cookies[i].getName().equals("customerSessionId") ){	//クッキー名が「customerSessionId」の場合
   					customerSessionId = cookies[i].getValue();	//値を取り出す
+  					cookie = cookies[i];
+  					break;
   				}
   			}
   		}
-  		System.out.println("★displayAdd customerService:"+customerService);
+  		//System.out.println("★displayAdd customerService:"+customerService);
   		System.out.println("★displayAdd customerSessionId（cookie）:"+customerSessionId);
   		if ( customerSessionId.equals("")==false ) {	//cookie内にcustomerSessionIdが入っている場合
-  			Customer c = customerService.findBySession( customerSessionId );			
+  			Customer c = customerMapper.findBySession( customerSessionId );			
   			if( c==null ) {	//CUSTOMERテーブルにcooieのセッションIDと一致する顧客が無ければ
   				return null;	//チェックNG
-  			}else {
+  			}else {	//cookieに正しくセッションIDが保存されていた場合
+  				//セッションIDをランダムに生成
+  				String rs = RandomStringUtils.randomAlphanumeric(32);	//32桁のランダムな英数文字列生成
+  				System.out.println( "cookiecheck() 新たな random String:"+rs );
+  				String sessionId = "ATTENDANCE"+rs;	//セッションID文字列を新たに生成
+  				cookie.setValue(sessionId);	//新たなセッションIDに書き換え
+  				Date authDate = c.getAuthTime();	//前回認証時刻取り出し
+  				Date now = new Date();	//現在時刻取り出し
+  				int diff = (int)((now.getTime() - authDate.getTime())/1000);	//前回認証時刻からの現在までの秒数算出
+  				System.out.println("cookiecheck() 前回認証時刻からの秒数="+diff);
+  				cookie.setMaxAge( 365*24*60*60 - diff );	//有効期限 前回認証から365日の秒数 に設定
+  				cookie.setPath("/customer");
+  				response.addCookie(cookie);
+  				customerMapper.setSession( c.getId(), sessionId );//CUSTOMERテーブルに新たなセッションID登録
   				return c;//顧客情報を返す（cookieのチェックOK）
   			}
   		}else {	//cookie内に customerSessionId 　が入っていなかった場合
