@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>顧客認証コード入力</h1>
-    <form th:action="@{/customerAuthCheck}" th:object="${AuthRequest}" th:method="post">
+    <form th:action="@{/customer/authCheck}" th:object="${AuthRequest}" th:method="post">
         <div>
            認証コード：<input type="text" name="authCode" size="40" />
         </div>
