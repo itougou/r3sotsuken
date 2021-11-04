@@ -32,6 +32,10 @@ public class Customer {
      */
     private String phone;
     /**
+     * Email
+     */
+    private String email;
+    /**
      * 更新日時
      */
     private Date updateDate;

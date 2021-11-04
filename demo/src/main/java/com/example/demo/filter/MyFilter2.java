@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,10 @@ public class MyFilter2 implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		// リクエスト発行時に実行される
+		System.out.println("★MyFilter2 （顧客用フィルタ）  doFilter start");
 
-		Customer c  = customerService.cookieCheck( (HttpServletRequest)request );	//クッキーチェック処理
+		Customer c  = customerService.cookieCheck( (HttpServletRequest)request, (HttpServletResponse)response );	//クッキーチェック処理
+		System.out.println("★MyFilter2 （顧客用フィルタ）  doFilter customer="+c);
 		if(c==null) {//cookie内にセッションIDが入っていなかった場合
 			RequestDispatcher dispatch = request.getRequestDispatcher("/customerLogin");	//ログイン画面へフォワード
 			dispatch.forward( request, response );

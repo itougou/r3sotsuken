@@ -50,7 +50,7 @@ public class PurchaseController {
     return "purchase/list";
   }
   
-  @GetMapping(value = "/purchase/add")
+  @GetMapping(value = "/customer/purchase/add")
   public String displayAdd(Model model, HttpServletRequest request) {
 	HttpSession session = request.getSession(false);	//セッションスコープ取り出し
 	if( session == null) {	//セッションスコープなしの場合

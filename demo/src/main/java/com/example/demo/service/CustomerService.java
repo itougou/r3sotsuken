@@ -17,7 +17,7 @@ public interface CustomerService {
     Customer findBySession(String sessionid);
     void add(Customer customer);
     List<Customer> getCustomer();
-    Customer cookieCheck( HttpServletRequest request );
+    Customer cookieCheck( HttpServletRequest request , HttpServletResponse response);
     boolean login( LoginRequest loginRequest , HttpServletRequest request, HttpServletResponse response );
     boolean logout( HttpServletRequest request, HttpServletResponse response );
     boolean authCheck( AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response );

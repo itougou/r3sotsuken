@@ -75,7 +75,7 @@ public class LoginController {
 	  }
 	  
 	  //顧客ログイン
-	  @RequestMapping( value = "/customerLogin", method = RequestMethod.POST )
+	  @RequestMapping( value = "/customer/login", method = RequestMethod.POST )
 	  public String doCustomerLogin( @ModelAttribute LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response , Model model ) {
 
 		boolean result = customerService.login( loginRequest, request, response );	//顧客ログイン（セッション登録処理）ロジック
@@ -89,7 +89,7 @@ public class LoginController {
 		}
 	  }
 	  //顧客認証コードチェック
-	  @RequestMapping( value = "/customerAuthCheck", method = RequestMethod.POST )
+	  @RequestMapping( value = "/customer/authCheck", method = RequestMethod.POST )
 	  public String doAuthCodeCheck( @ModelAttribute AuthRequest authRequest, HttpServletRequest request, HttpServletResponse response , Model model ) {
 
 		boolean result = customerService.authCheck( authRequest, request, response );	//顧客ログイン（セッション登録処理）ロジック
@@ -108,7 +108,7 @@ public class LoginController {
 		}
 	  }
 	  //顧客ログアウト
-	  @RequestMapping( value = "/customerLogout", method = RequestMethod.POST )
+	  @RequestMapping( value = "/customer/logout", method = RequestMethod.POST )
 	  public String doStaffLogout( HttpServletRequest request, HttpServletResponse response, Model model ) {
 
 	    customerService.logout( request, response );	//顧客ログアウト（セッション削除処理）ロジック
