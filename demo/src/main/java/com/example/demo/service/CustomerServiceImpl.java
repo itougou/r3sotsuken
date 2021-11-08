@@ -172,8 +172,8 @@ public class CustomerServiceImpl implements CustomerService{
   				}
   			}
   		}
-  		//System.out.println("★displayAdd customerService:"+customerService);
-  		System.out.println("★displayAdd customerSessionId（cookie）:"+customerSessionId);
+  		//System.out.println("★cookieCheck() customerService:"+customerService);
+  		System.out.println("★cookieCheck() customerSessionId（cookie）:"+customerSessionId);
   		if ( customerSessionId.equals("")==false ) {	//cookie内にcustomerSessionIdが入っている場合
   			Customer c = customerMapper.findBySession( customerSessionId );			
   			if( c==null ) {	//CUSTOMERテーブルにcooieのセッションIDと一致する顧客が無ければ
