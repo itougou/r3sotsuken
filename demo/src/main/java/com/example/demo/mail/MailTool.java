@@ -1,5 +1,6 @@
 package com.example.demo.mail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,13 @@ public class MailTool {
     @Autowired
     private MailSender sender;
     
+    @Autowired
+    private Environment environment;
+    
 	public String send( String title, String body , String email ) {	//メール送信
 		
+		System.out.println("★mailTool spring.mail.username："+environment.getProperty("spring.mail.username")); 
+
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 
 	    mailMessage.setTo( email );	//送信先アドレス
