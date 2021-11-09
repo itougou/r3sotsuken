@@ -22,7 +22,7 @@ import com.example.demo.entity.Customer;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.StaffService;
 /**
- * ログイン Controller　2021.11.5
+ * ログイン Controller　2021.11.5　
  */
 @Controller
 public class LoginController {
