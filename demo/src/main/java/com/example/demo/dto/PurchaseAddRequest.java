@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class PurchaseAddRequest implements Serializable {
-	// This is "org.springframework.format.annotation.DateTimeFormat"
+	// ↓ フォームの日付文字列をspringbootがDate型に自動変換するために必要
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date purchaseDate;
 	private int customerId;
