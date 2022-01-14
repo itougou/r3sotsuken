@@ -38,6 +38,7 @@ public class JavaConfig {
 		bean.addUrlPatterns("/customer/add");	//顧客追加
 		bean.addUrlPatterns("/customer/search");	//顧客検索
 		bean.addUrlPatterns("/purchase/list");	//顧客一覧
+		bean.addUrlPatterns("/purchase/edit");	//注文数変更
 		// MyFilterがMyFilter2より先に呼ばれる
 		//bean.setOrder(1);
 		return bean;
