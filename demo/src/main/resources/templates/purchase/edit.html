@@ -8,7 +8,6 @@
 </head>
 <body>
     <h1>注文編集</h1>
-<!--     <p><span th:text="${loginCustomer.name}"></span>　さんこんにちわ！！</p> -->
     <p>注文内容を変更して「変更」ボタンをクリックしてください。</p><br>
     <form th:action="@{/purchase/edit}" th:object="${purchaseAddRequest}"
         th:method="post">
