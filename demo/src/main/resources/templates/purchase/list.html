@@ -10,10 +10,11 @@
 <h1>注文一覧</h1>
   <table>
   	<tr><th>注文日</th><th>ID</th><th>名前</th><th>注文数</th></tr>
-    <tr th:each="pur : ${purchaselist}" th:object="${pur}" >
+    <tr th:each="pur , stat : ${purchaselist}" th:object="${pur}" >
       <td th:text="*{#dates.format(purchaseDate,'YYYY/MM/dd')}"></td>
       <td th:text="*{customerId}"></td>
-      <td th:if="*{customer != null}" th:text="*{customer.name}"></td>
+<!--       <td th:if="*{customer != null}" th:text="*{customer.name}"></td> -->
+      <td><a th:href="@{/purchase/edit(index=${stat.index})}" th:text="*{customer.name}"></a></td>
       <td th:text="*{suu}"></td>
     </tr>
   </table>

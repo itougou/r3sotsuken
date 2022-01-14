@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>注文</title>
+<link href="/css/list.css" rel="stylesheet"></link>
+<meta charset="utf-8" />
+</head>
+<body>
+    <h1>注文編集</h1>
+<!--     <p><span th:text="${loginCustomer.name}"></span>　さんこんにちわ！！</p> -->
+    <p>注文内容を変更して「変更」ボタンをクリックしてください。</p><br>
+    <form th:action="@{/purchase/edit}" th:object="${purchaseAddRequest}"
+        th:method="post">
+        <div>
+            日　付：<span th:text="${#dates.format(purchase.purchaseDate,'YYYY-MM-dd')}" ></span><br>
+            ユーザ：<span th:text="${customer.name}"> </span><br>
+            注文数：<input type="text" name="suu" size="50"  th:value="${purchase.suu}"><br>
+        </div>
+        <br>
+        <div>
+        <input type="hidden" name="purchaseDate" th:value="${#dates.format(purchase.purchaseDate,'YYYY-MM-dd')}">
+        <input type="hidden" name="customerId" th:value="${purchase.customerId}">
+        
+            <input type="submit" value="変更" style="width: 100px;" />
+        </div>
+    </form>
+    <p><a href="/purchase/list">一覧へ戻る</a></p>
+</body>
+</html>

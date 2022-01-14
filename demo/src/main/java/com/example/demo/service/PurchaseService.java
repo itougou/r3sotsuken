@@ -9,6 +9,7 @@ import com.example.demo.entity.Purchase;
 public interface PurchaseService {
 
     void add(Purchase purchase);
+    void edit(Purchase purchase);
     List<Purchase> getPurchase();
     Purchase getPurchaseOne( Date purchaseDate, int customerId );
 }

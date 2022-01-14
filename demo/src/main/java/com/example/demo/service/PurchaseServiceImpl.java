@@ -23,7 +23,11 @@ public class PurchaseServiceImpl implements PurchaseService{
     public void add( Purchase purchase ) {
         purchaseMapper.add( purchase );
     }
-    
+    //データ1件編集加
+    @Override
+    public void edit( Purchase purchase ) {
+        purchaseMapper.edit( purchase );
+    }
     //全件読み出し
     @Override
     public List<Purchase> getPurchase(){

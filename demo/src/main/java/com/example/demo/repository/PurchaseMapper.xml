@@ -36,4 +36,7 @@
         INSERT INTO Purchase ( purchase_date, customer_id, suu ) values ( #{purchaseDate}, #{customerId}, #{suu} ) 
     </insert>
     
+    <update id="edit">
+        UPDATE Purchase SET suu = #{suu} WHERE purchase_date = #{purchaseDate} AND customer_id = #{customerId}  
+    </update>
 </mapper>

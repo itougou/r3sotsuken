@@ -12,6 +12,7 @@ import com.example.demo.entity.Purchase;
 public interface PurchaseMapper {
 
     void add( Purchase purchase );
+    void edit( Purchase purchase );
     List<Purchase> findMany();
     Purchase findByDateId( Date purchaseDate, int customerId );
 }
